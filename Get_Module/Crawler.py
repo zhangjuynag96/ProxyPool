@@ -61,10 +61,10 @@ class Crawler(object, metaclass=ProxyMetaclass):
         html = get_page(start_url)
         if html:
             doc = pq(html)
-            lines = doc('div[name="list_proxy_ip"]').items()
+            lines = doc('div[id="list"]').items()
             for line in lines:
-                ip = line.find('.tbBottomLine:nth-child(1)').text()
-                port = line.find('.tbBottomLine:nth-child(2)').text()
+                ip = line.find('.table table-bordered table-striped:nth-child(1)').text()
+                port = line.find('.table table-bordered table-striped:nth-child(2)').text()
                 yield ':'.join([ip, port])
 
     def crawl_goubanjia(self):
