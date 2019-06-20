@@ -1,6 +1,7 @@
 import redis
 from random import choice
-from Setting import *
+from Setting import REDIS_HOST,REDIS_KEY,REDIS_PASSWORD,REDIS_PORT
+from Setting import MAX_SCORE,MIN_SCORE,INITIAL_SCORE
 from .Error import PoolEmptyError
 '''
     定义RedisClient类，用来操作Redis的有序集合
@@ -24,7 +25,10 @@ class RedisClient(object):
         '''
         #如果数据库表不存在，则创建新的数据库表
         if not self.db.zscore(REDIS_KEY,proxy):
-            return self.db.zadd(REDIS_KEY,score,proxy)
+            mapping = {
+                proxy:score
+            }
+            return self.db.zadd(REDIS_KEY,mapping)
 
     def random(self):
         '''
@@ -51,7 +55,7 @@ class RedisClient(object):
         score = self.db.zscore(REDIS_KEY,proxy) #获取score值
         if score and score > MIN_SCORE:
             print('代理',proxy,'当前分数',score,'减1')
-            return self.db.zincrby(REDIS_KEY,proxy,-1) #让proxy的score值-1
+            return self.db.zincrby(REDIS_KEY,-1,proxy) #让proxy的score值-1
         else:
             print('代理',proxy,'当前分数',score,'移除')
             return self.db.zrem(REDIS_KEY,proxy)  #移除proxy

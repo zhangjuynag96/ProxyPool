@@ -19,7 +19,7 @@ POOL_UPPER_THRESHOLD = 10000
     检测模块参数
 '''
 VALID_STATUS_CODES =[200]
-TEST_URL = 'http://wexin.sougou.com/weixin?type=2&query=nba' #目的网站地址最佳
+TEST_URL = 'www.baidu.com' #目的网站地址最佳
 BATCH_TEST_SIZE = 100
 
 
